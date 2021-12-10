@@ -1,5 +1,20 @@
 https://static.packt-cdn.com/products/9781789801736/graphics/C09581_08_02.jpg <- tree
 
+///
+typedef int itemType;
+typedef struct node
+{
+	itemType info;
+	struct node *left;
+	struct node *right;
+
+}tree_node, *tree_ptr;
+
+void rangeSearch(tree_ptr t, itemType u, itemType v);
+void createTree(tree_ptr t);
+////
+
+
 void createTree(tree_ptr t)
 {
 	t->info = 7;
