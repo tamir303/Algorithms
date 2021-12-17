@@ -1,0 +1,88 @@
+/* creates a binary tree from two arrays
+ array1 inorder | array2 preorder
+ inorder example { 'C', 'E', 'H', 'J', 'F', 'G', 'D', 'I', 'B', 'A' };
+ preorder example { 'D', 'E', 'C', 'G', 'J', 'H', 'F', 'I', 'A', 'B' };
+ result :   D
+           /  \
+          E     I
+         / \     \
+        C   G     A
+           /     /
+          J     B
+         / \
+        H   F
+*/
+
+/* 
+STRUCT:
+typedef struct node {
+	char info;
+	struct node *left, *right;
+} tree, *tree_ptr;
+*/
+
+/*
+FUNCTIONS:
+void createFromArrays(tree_ptr ptr,char inoredr[], char preorder[],int size); // ptr - tree pointer, size - array's number of elements
+int findIndexInArray(char arr[], char c,int size); // finds the index of element equal to char c
+void partition(int index,int size,char arr[],char left[], char right[]); // creates two new arrays right|left around(not included) the index
+*/
+
+/*
+IMPLEMENTATION:
+void createFromArrays(tree_ptr ptr, char inorder[], char preorder[],int size)
+{
+	ptr->info = *preorder;
+	int n = findIndexInArray(inorder, *preorder, size);
+	char* left = (char*)malloc(sizeof(char)*n), *right = (char*)malloc(sizeof(char)*(size - (n + 1)));
+	partition(n, size, inorder, left, right);
+
+	if (n != 0)
+	{
+		ptr->left = (tree_ptr)malloc(sizeof(tree));
+		createFromArrays(ptr->left, left, preorder+1, n);
+	}
+	else ptr->left = NULL;
+
+	if (size - (n + 1) != 0)
+	{
+		ptr->right = (tree_ptr)malloc(sizeof(tree));
+		createFromArrays(ptr->right, right, preorder+(n+1), size - (n + 1));
+	}
+	else ptr->right = NULL;
+}
+
+int findIndexInArray(char arr[], char c,int size)
+{
+	for (int i = 0; i < size; i++)
+		if (arr[i] == c) return i;
+	return -1;
+}
+
+void partition(int index,int size,char arr[],char left[],char right[])
+{
+	int leftCounter = 0, rightCounter = 0;
+	for (int i = 0; i < size; i++)
+	{
+		if (i < index)
+		{
+			left[leftCounter] = arr[i];
+			leftCounter++;
+		}
+		else if(i > index)
+		{
+			right[rightCounter] = arr[i];
+			rightCounter++;
+		}
+	}
+}
+*/
+
+/*
+MAIN:
+char pre[10] = { 'D', 'E', 'C', 'G', 'J', 'H', 'F', 'I', 'A', 'B' };
+	char in[10] = { 'C', 'E', 'H', 'J', 'F', 'G', 'D', 'I', 'B', 'A' };
+	tree node;
+	int size = sizeof(in);
+	createFromArrays(&node, in, pre, size);
+*/
